@@ -1,0 +1,45 @@
+[debug] [2018-04-16T09:05:10.733Z] ----------------------------------------------------------------------
+[debug] [2018-04-16T09:05:10.736Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2018-04-16T09:05:10.736Z] CLI Version:   3.18.2
+[debug] [2018-04-16T09:05:10.736Z] Platform:      darwin
+[debug] [2018-04-16T09:05:10.736Z] Node Version:  v8.10.0
+[debug] [2018-04-16T09:05:10.737Z] Time:          Mon Apr 16 2018 02:05:10 GMT-0700 (PDT)
+[debug] [2018-04-16T09:05:10.737Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-04-16T09:05:10.806Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-04-16T09:05:10.806Z] > authorizing via signed-in user
+[debug] [2018-04-16T09:05:10.809Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/group-calendar-app  
+  
+ Mon Apr 16 2018 02:05:10 GMT-0700 (PDT)
+[debug] [2018-04-16T09:05:11.375Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-16T09:05:11.376Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/group-calendar-app/tokens  
+  
+ Mon Apr 16 2018 02:05:11 GMT-0700 (PDT)
+[debug] [2018-04-16T09:05:12.042Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-16T09:05:12.044Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/group-calendar-app  
+  
+ Mon Apr 16 2018 02:05:12 GMT-0700 (PDT)
+[debug] [2018-04-16T09:05:12.426Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/Lorenzo/Desktop/ohm'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-04-16T09:05:20.854Z] Fetching environment
+[debug] [2018-04-16T09:05:20.857Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/987306291886:getServerAppConfig  
+  
+ Mon Apr 16 2018 02:05:20 GMT-0700 (PDT)
+[debug] [2018-04-16T09:05:20.857Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/987306291886/clients/_:getWebAppConfig  
+  
+ Mon Apr 16 2018 02:05:20 GMT-0700 (PDT)
+[debug] [2018-04-16T09:05:21.188Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-16T09:05:21.189Z] Starting @google-cloud/functions-emulator
+[debug] [2018-04-16T09:05:21.667Z] <<< HTTP RESPONSE 200
+[warn] ⚠  hosting: Port 5000 is not available. Trying another port...
+[debug] [2018-04-16T09:05:21.912Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/987306291886/clients/_:getWebAppConfig  
+  
+ Mon Apr 16 2018 02:05:21 GMT-0700 (PDT)
+[debug] [2018-04-16T09:05:22.188Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5004
+
+[debug] [2018-04-16T09:05:27.224Z] Parsing function triggers

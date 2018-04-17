@@ -1,0 +1,75 @@
+
+/* Style boxes */
+/* body * {
+    font-size: 1.15rem;
+} */
+
+.logo-text {
+    font-family: 'Monoton', cursive;
+    font-size: 1.8rem;
+}
+
+._frontPageElement {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+
+._todosBox {
+    min-height: 25vh;
+}
+
+
+.wrapper {
+    margin-top: 60px;
+}
+
+._displayDay {
+    position: fixed;
+    bottom: 3.5%;
+    left: 12%;
+    z-index: 5;
+    max-height: 100px;
+}
+
+.header {
+    padding-top: 8px;
+}
+
+._addTask {
+    position: fixed;
+    bottom: 6%;
+    right: 13%;
+    z-index: 5;
+}
+
+._calendarButtonStyle {
+    border: none;
+}
+
+@media only screen and (min-width: 767px) {
+
+    .wrapper {
+        margin-top: 80px;
+    }
+
+    /* Move calendar icon button to top right */
+    ._displayDay {
+        position: absolute;
+        top: 6.5%;
+        left: 77%;
+        z-index: 5;
+        max-height: 100px;
+        padding:5px;
+        
+    }
+    
+    /* Move add task button to bottom right */
+    ._addTask {
+        position: fixed;
+        bottom: 9.5%;
+        right: 10%;
+        z-index: 5;
+    }
+
+}

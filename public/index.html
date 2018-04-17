@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task Manager</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="assets/css/reset.css">    
+    <!-- Semantic-UI CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/app.css">
+    <!-- Google+ Api Login -->
+    <meta name="google-signin-client_id" content="987306291886-0i33fhbb6k1ceqti25epi6f6393bcqkq.apps.googleusercontent.com">
+    <!-- Calendar CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css">
+
+    <!-- FIREBASE -->
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/4.12.1/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/4.12.1/firebase-auth.js"></script>
+    <script defer src="/__/firebase/4.12.1/firebase-database.js"></script>
+    <script defer src="/__/firebase/4.12.1/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/4.12.1/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+    <!-- *Added firebase-store manually to connect to firestore database -->
+    <script defer src="/__/firebase/4.12.1/firebase-firestore.js"></script>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+    
+  </head>
+  
+  <body>
+    <div class="ui inverted icon top fixed menu">
+      <a class="item" id="menu-toggle">
+        <i class="terminal large icon"></i>
+        &nbsp;&nbsp;&nbsp;<span class="logo-text">Ohm</span>
+      </a>
+      <div class="right menu" id="signin-container">
+          <button class="ui black button" id="signin-button" onclick="login()"><i class="ui icon google"></i>Sign In</button>
+      </div>
+    </div>
+      <!-- HERO -->
+      <img class="ui fluid image" src="assets/images/placeholder.jpg" alt="">
+      <div id="login-page">
+        <!-- Body -->
+        <div class="ui container _frontPageElement ">
+            <img class="ui fluid image" src="assets/images/hero-2.JPG">
+            <div class="ui items segment">
+                <div class="item">
+                  <div class="content">
+                    <h1 class="logo-text">Ohm</h1>
+                    <div class="ui two column stackable grid">
+                      <div class="description column">
+                          <h2 class="ui sub header">Simple. Efficient. Organizer.</h2>
+                    <div class="ui divider"></div>
+                          
+                        <p>Cillum nulla elit nostrud reprehenderit fugiat. Reprehenderit ipsum sunt veniam nostrud ipsum amet fugiat.</p>
+                        <p>Sint nulla magna aliqua do qui Lorem labore velit consequat.Anim cillum labore elit exercitation sunt enim consequat aliquip cillum 
+                          veniam eu.Aliquip sint esse aliquip minim laboris cillum sit exercitation mollit proident cillum.</p>
+                      </div>
+                      <div class="description column">
+                          <h2 class="ui sub header green">Sign Up Now</h2>
+                    <div class="ui divider"></div>
+                          
+                        <p>Cillum nulla elit nostrud reprehenderit fugiat. Reprehenderit ipsum sunt veniam nostrud ipsum amet fugiat.</p>
+                        <p>Sint nulla magna aliqua do qui Lorem labore velit consequat.Anim cillum labore elit exercitation sunt enim consequat aliquip cillum 
+                          veniam eu.Aliquip sint esse aliquip minim laboris cillum sit exercitation mollit proident cillum.</p>
+                      </div>
+                  </div>
+                    <div class="extra">
+                      <i class="green check icon"></i>
+                      121 Votes
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+
+    <div class="wrapper" id="wrapper-id">
+      
+        <!-- Step 2: Render Todo list - Use jQuery to hide() and show() -->
+        <div class="ui two column stackable middle aligned grid container _mainGrid" id="main-page" >
+                
+          <!-- *** Column for tasks ***-->
+          <div class="column ">
+            <!-- Add ROWS based on days/date -->
+                  <!-- Test Event1 -->
+                  <!-- Dynamically generate div.events this is where new tasks are rendered -->
+                  <div class="ui stacked segment _todosBox"> 
+                    <div class="content">
+                      <div class="summary">
+                        <span id="list-goals">Daily Goals</span>
+                      </div>
+                      <div class="ui list" id="goals-main-list">
+                        <!-- Dynamically generate div.items this is where new dates are rendered and where each item  -->
+                        <!-- <div class="item extra text"  data-task="task-1">
+                          <div class="ui checkbox">
+                              <input type="checkbox">
+                              <label>Wake up at 6am</label>
+                          </div>
+                        </div>
+                        <div class="item extra text" data-task="task-2">
+                            <div class="ui checkbox">
+                                <input type="checkbox">
+                                <label>Meditate</label>
+                            </div>
+                        </div>
+                        <div class="item extra text" data-task="task-3">
+                            <div class="ui checkbox">
+                                <input type="checkbox">
+                                <label>Morning run</label>
+                            </div>
+                        </div>
+                        <div class="item extra text" data-task="task-4">
+                            <div class="ui checkbox">
+                                <input type="checkbox">
+                                <label>Plan my day</label>
+                            </div>
+                        </div> -->
+                      </div>
+                    </div>
+                </div>
+                <div class="ui stacked segment _todosBox"> 
+                      <div class="content">
+                      <div class="summary">
+                        <span id="list-task">Tasks Today</span>
+                      </div>
+                      <div class="ui list" id="tasks-main-list">
+                        <!-- Dynamically generate div.items this is where new dates are rendered and where each item  -->
+                        <!-- <div class="item extra text"  data-task="task-1">
+                            <div class="ui checkbox">
+                                <input type="checkbox">
+                                <label>Work on project</label>
+                            </div>
+                          </div>
+                          <div class="item extra text" data-task="task-2">
+                              <div class="ui checkbox">
+                                  <input type="checkbox">
+                                  <label>Drink coffee</label>
+                              </div>
+                          </div>
+                          <div class="item extra text" data-task="task-3">
+                              <div class="ui checkbox">
+                                  <input type="checkbox">
+                                  <label>Exercise</label>
+                              </div>
+                          </div>
+                          <div class="item extra text" data-task="task-4">
+                              <div class="ui checkbox">
+                                  <input type="checkbox">
+                                  <label>Take a shower</label>
+                              </div>
+                          </div> -->
+                      </div>
+                      </div>
+                  </div>
+            </div>
+
+          <!-- *** Column for 3 things *** -->
+          <div class="column">
+              <form class="ui form fixed">
+                  <div class="field">
+                    <!-- <label>Things That Went Well</label> -->
+                    <input type="text" name="do-well" id="do-well"placeholder="What did I do well on today?" onchange="validateThreeThings()">
+                  </div>
+                  <div class="field">
+                    <!-- <label>Tasks Today</label> -->
+                    <input type="text" name="grateful-for" id="grateful-for"placeholder="What are the things I am grateful for that happened?" onchange="validateThreeThings()">
+                  </div>
+                  <div class="field">
+                    <!-- <label>Tasks Today</label> -->
+                    <input type="text" name="done-better" id="done-better" placeholder="What could have I improve on?" onchange="validateThreeThings()">
+                  </div>
+                  <button class="ui fluid green button" id="done-button">Done!</button>
+              </form>
+          </div>
+
+          <!-- *** Add Task Button -->
+          <div class="some-wrapping-div">
+              <div class="ui huge circular red icon button _addTask" id="add-task" data-content="The default theme's basic popup removes the pointing arrow." data-variation="basic">
+                  <i class="add icon"></i>
+            </div>
+          </div>
+          <div class="ui custom popup">
+              <form class="ui form">
+                    <div class="field">
+                      <label>Add Task:</label>
+                      <input type="text" id="add-input" name="name" placeholder="" required>
+                    </div>
+                    <div class="field">
+                      <input type="datetime-local" id="due-date-input">
+                    </div>
+                    <div class="fields">
+                      <div class="field">
+                          <div class="ui selection dropdown" id="category-input">
+                              <input type="hidden" >
+                              <i class="dropdown icon"></i>
+                              <div class="default text">Category</div>
+                              <div class="menu">
+                                  <div class="item" data-value="goal">Goal</div>
+                                  <div class="item" data-value="task">Task</div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="field">
+                          <div class="ui selection dropdown" id="priority-input">
+                              <input type="hidden" name="priority-input">
+                              <i class="dropdown icon"></i>
+                              <div class="default text">Priority</div>
+                              <div class="menu" id="priority-multiselect">
+                                <div class="item" value="0"></div>
+                                <div class="item" value="3">1</div>
+                                <div class="item" value="2">2</div>
+                                <div class="item" value="1">3</div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    
+                    <input type="submit" class="ui button " id="add-task-button" tabindex="0" onclick="addTodo()"></button>
+                  </form>
+
+          </div>
+          
+          <div class="_displayDay ui items">
+              <div class='_calendarButtonStyle ui green basic button' id="calendar-button">
+              <div class="item">
+                  <i class=" ui huge calendar alternate outline icon" ></i>
+                  <div class="middle aligned content">
+                    <header class="header">
+                      <span id="display-day"> Monday</span>
+                    </header>
+                    <div class="extra">
+                      <span id="display-date"> 04/20/18 </span>
+                    </div>
+                  </div>
+              </div>
+            </div>
+              
+             
+              <!-- <h3 class="ui header">
+                <i class=" ui huge calendar alternate outline icon"></i>
+                <span id="display-day">Monday</span>
+                <span class='ui sub header' id="display-date">04/20</span>
+              </h3> -->
+              <!-- <span class="ui sub header"><span class='ui sub header' id="display-date">
+                04/20</span></span> -->
+            </div>
+        <!-- TEST SIGNOUT -->
+        <!-- <button class="g-signout"id="signOut" onclick="signOut()">Sign Out</button> -->
+      </div>  
+
+      <!-- <button class="ui red inverted button " id="calendar-button"></button> -->
+      <div class="ui fullscreen modal">
+      <div id="calendar"></div>
+        
+          <!-- <div class="ui icon header">
+            <i class="archive icon"></i>
+            Archive Old Messages
+          </div>
+          <div class="content">
+            <p>Your inbox is getting full, would you like us to enable automatic archiving of old messages?</p>
+          </div>
+          <div class="actions">
+            <div class="ui red basic cancel inverted button">
+              <i class="remove icon"></i>
+              No
+            </div>
+            <div class="ui green ok inverted button">
+              <i class="checkmark icon"></i>
+              Yes
+            </div>
+          </div> -->
+      </div>
+      <!-- <div id="calendar"></div> -->
+    </div> <!-- END wrapper -->
+
+
+
+    <!-- Index.js -->
+    <script src="assets/javascript/index.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Google API -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <!-- Link to Moment.js should go here -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <!-- SemanticUI JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+    <!-- Calendar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+    <!-- Custom JS - calendar -->
+    <script src="assets/javascript/calendar.js"></script>
+    <!-- Google Calendar Dependencies -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/gcal.min.js'></script>
+
+  </body>
+</html>
+
+
+
+<!-- AIzaSyBDgz9GKw_xbSGjntcTGKhN2-bQ2czRZwM -->
+<!-- 5e647khad3btbk7bq06sf4kc6g@group.calendar.google.com -->
