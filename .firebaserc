@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "group-calendar-app",
+    "ohm-project": "group-calendar-app"
+  }
+}

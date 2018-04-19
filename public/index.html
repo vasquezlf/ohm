@@ -35,7 +35,7 @@
   </head>
   
   <body>
-    <div class="ui inverted icon top fixed menu">
+    <div class="ui inverted icon top fixed menu _navbar">
       <a class="item" id="menu-toggle">
         <i class="terminal large icon"></i>
         &nbsp;&nbsp;&nbsp;<span class="logo-text">Ohm</span>
@@ -45,11 +45,10 @@
       </div>
     </div>
       <!-- HERO -->
-      <img class="ui fluid image" src="assets/images/placeholder.jpg" alt="">
-      <div id="login-page">
+      <div class="_loginPage" id="login-page">
         <!-- Body -->
         <div class="ui container _frontPageElement ">
-            <img class="ui fluid image" src="assets/images/hero-2.JPG">
+            <img class="ui fluid image" src="assets/images/hero-2-modified-min.JPG">
             <div class="ui items segment">
                 <div class="item">
                   <div class="content">
@@ -95,14 +94,15 @@
                   <div class="ui stacked segment _todosBox"> 
                     <div class="content">
                       <div class="summary">
-                        <span id="list-goals">Daily Goals</span>
+                        <h3 id="list-goals">Daily Goals</h3>
                       </div>
                       <div class="ui list" id="goals-main-list">
                         <!-- Dynamically generate div.items this is where new dates are rendered and where each item  -->
-                        <!-- <div class="item extra text"  data-task="task-1">
-                          <div class="ui checkbox">
+                        <!-- <div class="item description"  data-task="task-1">
+                          <div class="ui checkbox _checkboxLine">
                               <input type="checkbox">
-                              <label>Wake up at 6am</label>
+                              
+                              <label><span class="entryUIText" id="entry-UI-text">Wake up </span><span class="dueUIText" id="due-UI-text">6am </span> <span class="priorityUIText" id="priority-UI-text"> P-1.</span></label>
                           </div>
                         </div>
                         <div class="item extra text" data-task="task-2">
@@ -129,7 +129,7 @@
                 <div class="ui stacked segment _todosBox"> 
                       <div class="content">
                       <div class="summary">
-                        <span id="list-task">Tasks Today</span>
+                        <h3 id="list-task">Tasks Today</h3>
                       </div>
                       <div class="ui list" id="tasks-main-list">
                         <!-- Dynamically generate div.items this is where new dates are rendered and where each item  -->
@@ -167,29 +167,24 @@
               <form class="ui form fixed">
                   <div class="field">
                     <!-- <label>Things That Went Well</label> -->
-                    <input type="text" name="do-well" id="do-well"placeholder="What did I do well on today?" onchange="validateThreeThings()">
+                    <input type="text" name="do-well" id="do-well" placeholder="What did I do well on today?" onchange="validateThreeThings()">
                   </div>
                   <div class="field">
                     <!-- <label>Tasks Today</label> -->
-                    <input type="text" name="grateful-for" id="grateful-for"placeholder="What are the things I am grateful for that happened?" onchange="validateThreeThings()">
+                    <input type="text" name="grateful-for" id="grateful-for" placeholder="What are the things I am grateful for that happened?" onchange="validateThreeThings()">
                   </div>
                   <div class="field">
                     <!-- <label>Tasks Today</label> -->
                     <input type="text" name="done-better" id="done-better" placeholder="What could have I improve on?" onchange="validateThreeThings()">
                   </div>
-                  <button class="ui fluid green button" id="done-button">Done!</button>
+                  <button class="ui fluid green button" id="done-button" onclick="done()">Done!</button>
               </form>
           </div>
 
-          <!-- *** Add Task Button -->
-          <div class="some-wrapping-div">
-              <div class="ui huge circular red icon button _addTask" id="add-task" data-content="The default theme's basic popup removes the pointing arrow." data-variation="basic">
-                  <i class="add icon"></i>
-            </div>
-          </div>
+ 
           <div class="ui custom popup">
               <form class="ui form">
-                    <div class="field">
+                    <div class="required field">
                       <label>Add Task:</label>
                       <input type="text" id="add-input" name="name" placeholder="" required>
                     </div>
@@ -197,7 +192,7 @@
                       <input type="datetime-local" id="due-date-input">
                     </div>
                     <div class="fields">
-                      <div class="field">
+                      <div class="required field">
                           <div class="ui selection dropdown" id="category-input">
                               <input type="hidden" >
                               <i class="dropdown icon"></i>
@@ -214,34 +209,21 @@
                               <i class="dropdown icon"></i>
                               <div class="default text">Priority</div>
                               <div class="menu" id="priority-multiselect">
-                                <div class="item" value="0"></div>
-                                <div class="item" value="3">1</div>
-                                <div class="item" value="2">2</div>
-                                <div class="item" value="1">3</div>
+                                <div class="item"></div>
+                                <div class="item">1</div>
+                                <div class="item">2</div>
+                                <div class="item">3</div>
                               </div>
                           </div>
                       </div>
                     </div>
                     
-                    <input type="submit" class="ui button " id="add-task-button" tabindex="0" onclick="addTodo()"></button>
+                    <input type="submit" class="ui button " id="add-task-button" tabindex="0" onclick="addTodo()">
                   </form>
 
           </div>
           
-          <div class="_displayDay ui items">
-              <div class='_calendarButtonStyle ui green basic button' id="calendar-button">
-              <div class="item">
-                  <i class=" ui huge calendar alternate outline icon" ></i>
-                  <div class="middle aligned content">
-                    <header class="header">
-                      <span id="display-day"> Monday</span>
-                    </header>
-                    <div class="extra">
-                      <span id="display-date"> 04/20/18 </span>
-                    </div>
-                  </div>
-              </div>
-            </div>
+          
               
              
               <!-- <h3 class="ui header">
@@ -254,12 +236,35 @@
             </div>
         <!-- TEST SIGNOUT -->
         <!-- <button class="g-signout"id="signOut" onclick="signOut()">Sign Out</button> -->
-      </div>  
+       
 
       <!-- <button class="ui red inverted button " id="calendar-button"></button> -->
+      <div class="_displayDayBox ui items">
+        <div class='_calendarButtonStyle ui green basic button' id="calendar-button">
+        <div class="item">
+            <i class=" ui huge calendar alternate outline icon _calendarIcon" ></i>
+            <div class="middle aligned content">
+              <header class="header _displayDay">
+                <span class="" id="display-day"> Monday</span>
+              </header>
+              <div class="extra">
+                <span id="display-date"> 04/20/18 </span>
+              </div>
+            </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- *** Add Task Button -->
+      <div class="some-wrapping-div">
+        <div class="ui huge circular red icon button _addTask" id="add-task" data-content="The default theme's basic popup removes the pointing arrow." data-variation="basic">
+            <i class="add icon"></i>
+      </div>
+    </div>
       <div class="ui fullscreen modal">
-      <div id="calendar"></div>
-        
+        <div class="ui piled segment">
+        <div class="customCalendar" id="calendar"></div>
+      </div>
           <!-- <div class="ui icon header">
             <i class="archive icon"></i>
             Archive Old Messages
@@ -282,11 +287,20 @@
     </div> <!-- END wrapper -->
 
 
+    <div class="ui small modal">
+        <div class="header">Header</div>
+        <div class="image content">
+          <img class="image">
+          <div class="description">
+            <p></p>
+          </div>
+        </div>
+      </div>
 
-    <!-- Index.js -->
-    <script src="assets/javascript/index.js"></script>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- app.js -->
+    <script src="assets/javascript/app.js"></script>
     <!-- Google API -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
@@ -302,11 +316,10 @@
     <script src="assets/javascript/calendar.js"></script>
     <!-- Google Calendar Dependencies -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/gcal.min.js'></script>
+    <!-- <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script> -->
 
   </body>
 </html>
-
-
-
-<!-- AIzaSyBDgz9GKw_xbSGjntcTGKhN2-bQ2czRZwM -->
-<!-- 5e647khad3btbk7bq06sf4kc6g@group.calendar.google.com -->

@@ -5,10 +5,15 @@ var userResultGlobalObject = {}
     // Hide Done button
     $('#done-button').hide()
 
+    // Hide login page
+    $('._loginPage').hide()
+     // Check if user logged in. If logged in go to next page
+    //  firebase.auth().onAuthStateChanged(newLoginHappened)
+    
+    
 // ************* Initializations *************************
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready( function() {
     console.log("Index.js loaded")
-
 
     const app = firebase.app()
     const db = firebase.firestore()
@@ -24,26 +29,23 @@ document.addEventListener('DOMContentLoaded', function() {
     $('.ui.fullscreen.modal')
     .modal('attach events', '#calendar-button', 'show')
 
+
     displayDayToday()
-    // Clear form (doesnt work)
-    // $('.ui.form').form();
 
-    // $('form#add-input').each(function() {
-    //     $(this).form('reset');
-    // })
+    // // Form validation
+    //     $('.ui.form')
+    //     .form({
 
-    // Form validation
-    // $('.ui.form')
-    // .form({
     //     fields: {
-    //     name     : 'empty',
-    //     gender   : 'empty',
-    //     username : 'empty',
-    //     password : ['minLength[6]', 'empty'],
-    //     skills   : ['minCount[2]', 'empty'],
-    //     terms    : 'checked'
+    //         name     : 'empty',
+    //         gender   : 'empty',
+    //         username : 'empty',
+    //         password : ['minLength[6]', 'empty'],
+    //         skills   : ['minCount[2]', 'empty'],
+    //         terms    : 'checked'
     //     }
-    // })
+    //     })
+    // ;
 
     // Initialize dropdowns
     $('.ui.selection.dropdown').dropdown()
@@ -76,7 +78,7 @@ if (result) {
     .then(result => {
         console.log(result)
     // Hide login page after logging in
-    $('#login-page').hide()
+    $('._loginPage').hide()
     // Proceed to main logic
         app(result)
     })
@@ -93,7 +95,7 @@ if (result) {
     console.log(email)
     console.log()
     // Hide signin-button
-    // $('#signin-button').hide()
+    $('#signin-button').hide()
 
     // Change signin to user name
     $('#signin-container').html(`<div class="item">Hello, ${name}</div>`)
@@ -119,23 +121,28 @@ if (result) {
   //******** FUNCTIONS *****************************************************************
   //
   // --- Section 1: Logic functions ---
-function addToUI() {
+function addToUI(entry, category, dueDate, priority) {
     event.preventDefault()
     
     console.log('\n-Button clicked- Added a Goal\n')
     // Get the task "value" from the textbox and store it
-    const goal = $('#add-input').val().trim()
-    const dueDate = $('#due-date-input').val()
-    const category = $('#category-input').dropdown("get value")
-    const priority = $('#priority-input').dropdown("get value")
+    // const entry = $('#add-input').val().trim()
+    // const dueDate = $('#due-date-input').val()
+    // const category = $('#category-input').dropdown("get value")
+    // const priority = $('#priority-input').dropdown("get value")
 
-    const inputsArray = [goal, dueDate, category, priority]
+    if(dueDate) {
+        //format duedate
+        dueDate = moment(dueDate).format('h:mm a')
+    }
+    const inputsArray = [entry, dueDate, priority]
     var isGoalOrTask = ''
+    console.log('InputsArray: ', inputsArray)
 
-    console.log('Goal:', goal)
+    console.log('Goal:', entry)
     console.log('dueDate: ', dueDate)
     console.log('category:', category)
-    console.log('priority:', priority[1])
+    console.log('priority:', priority)
     console.log('')
 
     if(category === 'goal') {
@@ -149,31 +156,59 @@ function addToUI() {
     // const eventDate = $('#test-04202018')
     const UIListItem = $(`<div class="item extra text">`)
     const UICheckbox = $(`<div class="ui checkbox">`)
-    const UITaskInput = $(`<input type="checkbox">`)
-    const UITaskLabel = $(`<label>`)
+    const UIEntryInput = $(`<input type="checkbox">`)
+    const UIEntryLabel = $(`<label>`)
+    const entryUIText = $(`<span class="entryUIText" id="entry-UI-text">`)
+    const dueUIText = $(`<span class="dueUIText" id="due-UI-text">`)
+    const priorityUIText = $(`<span class="priorityUIText" id="priority-UI-text">`)
     
     // ********* THIS IS AN IMPORTANT VARIABLE ****
-    const goalList = $(isGoalOrTask)
+    const entryList = $(isGoalOrTask)
 
-    const goalListItem = $(UIListItem).appendTo(goalList)
-    const goalListCheckbox = $(UICheckbox).appendTo(goalListItem)
-    const goalListInput = $(UITaskInput).appendTo(goalListCheckbox)
-    const goalListLabel = $(UITaskLabel).appendTo(goalListCheckbox)
+    const entryListItem = $(UIListItem).appendTo(entryList)
+    const entryListCheckbox = $(UICheckbox).appendTo(entryListItem)
+    const entryListInput = $(UIEntryInput).appendTo(entryListCheckbox)
+    const entryListLabel = $(UIEntryLabel).appendTo(entryListCheckbox)
+    
+    const entryListLabelArray = [
+        $(entryUIText).appendTo(UIEntryLabel),
+        $(dueUIText).appendTo(UIEntryLabel),
+        $(priorityUIText).appendTo(UIEntryLabel)
+    ]
 
-    // Hacky validation. Ask for help to validate fields with Semantic UI
-    if(goal || dueDate || category || priority) {
-        inputsArray.forEach(element => {
-            if(!element) {
-                return
-            }
+    // var counter = 0;
+    // // Hacky validation. Ask for help to validate fields with Semantic UI
+    // if(entry || dueDate || category || priority) {
+    //     inputsArray.forEach(element => {
+            
 
-            else {
-                console.log("\nAppended element: ", element)
-                goalListLabel.append(element)
-            }
-        })
+    //         if(!element) {
+    //             return
+    //         }
+
+    //         else {
+    //             console.log("\nAppended element: ", element)
+    //             // entryListLabel.append(element)
+
+    //             entryListLabelArray[counter].append(`${element} `)
+    //             counter++;
+    //         }
+    //     })
+    // }
+
+    if(entry) {
+        // $(entry).appendTo(entryUIText)
+        $(entryUIText).append(entry)
     }
-    $('#add-input').text('')
+    if(dueDate) {
+        // $(dueDate).appendTo(dueUIText)
+        $(dueUIText).append(` at ${dueDate}`)
+    }
+    if(priorityUIText) {
+        // priority.appendTo(priorityUIText)
+        $(priorityUIText).append(` P-${priority}`)
+    }
+
   }
 
 
@@ -182,32 +217,37 @@ function addToUI() {
 function addTodo() {
     event.preventDefault()
     console.log('\nAdd goal or task...')
-    const category = $('#category-input').dropdown("get value")
-    const dueDate = $('#due-date-input').val()
+    const entryInput = $('#add-input').val().trim()
+    const catInput = $('#category-input').dropdown("get value")
+    const dueDateInput = $('#due-date-input').val()
+    const priorityInput = $('#priority-input').dropdown("get value")
 
-    console.log('Input category is: ', category)
     // 1. Add to DB
-    addTodoDB()
+    addTodoDB(entryInput, catInput,dueDateInput,priorityInput)
 
     // 2. Add to UI
-    addToUI()
+    addToUI(entryInput, catInput,dueDateInput,priorityInput)
+
+    //Reset Input fields
+    $('#add-input').val('')
+    $('#due-date-input').val('')
+    $('.ui.selection.dropdown').dropdown("clear")
 }
 
 //This function adds Todo to database in goalsCollection or tasksCollection
-function addTodoDB(){
+function addTodoDB(todo,category,dueDate, priority){
     event.preventDefault()
     console.log("\nAdd Todo DB function fired off..\n")
         
     const db = firebase.firestore()
     const usersCollection = db.collection('users')
-    const todo = $('#add-input').val().trim()
-    const priority = $('#priority-input').val().trim()
     const email = userResultGlobalObject.email
-    // const timeNow = currentTimestamp()
     const timeNow = Date.now()
-    const category = $('#category-input').dropdown("get value")
-    const dueDate = $('#due-date-input').val()
     const timestamp = firebase.firestore.FieldValue.serverTimestamp()
+    // const priority = $('#priority-input').val().trim()
+    // const todo = $('#add-input').val().trim()
+    // const category = $('#category-input').dropdown("get value")
+    // const dueDate = $('#due-date-input').val()
 
     var userRecordDoc = ''
 
@@ -313,13 +353,17 @@ function renderTodoUI(user) {
                 const todoData = doc.data()
                 console.log('\n ******* doc.data():', doc.data())
                 // Get the task "value" from the textbox and store it
-                var goal = todoData.entryMessage
-                const dueDate = $('#due-date-input').val()
-                // const category = todoData.category
-                const category = ''
-                const priority = $('#priority-input').dropdown("get value")
+                const goal = todoData.entryMessage
+                var dueDate = todoData.due
+                const category = todoData.category
+                const priority = todoData.priority
                 const inputsArray = [goal, dueDate, category, priority]
                 var isGoalOrTask = ''
+
+                //format duedate
+                if(dueDate) {
+                    dueDate = moment(dueDate).format('h:mm a')
+                }
 
                 console.log('Goal:', goal)
                 console.log('dueDate: ', dueDate)
@@ -329,29 +373,52 @@ function renderTodoUI(user) {
         
                 const UIListItem = $(`<div class="item extra text">`)
                 const UICheckbox = $(`<div class="ui checkbox">`)
-                const UITaskInput = $(`<input type="checkbox">`)
-                const UITaskLabel = $(`<label>`)
+                const UIEntryInput = $(`<input type="checkbox">`)
+                const UIEntryLabel = $(`<label>`)
+                const entryUIText = $(`<span class="entryUIText" id="entry-UI-text">`)
+                const dueUIText = $(`<span class="dueUIText" id="due-UI-text">`)
+                const priorityUIText = $(`<span class="priorityUIText" id="priority-UI-text">`)
                 
-                const goalList = $('#tasks-main-list')
-                const goalListItem = $(UIListItem).appendTo(goalList)
-                const goalListCheckbox = $(UICheckbox).appendTo(goalListItem)
-                const goalListInput = $(UITaskInput).appendTo(goalListCheckbox)
-                const goalListLabel = $(UITaskLabel).appendTo(goalListCheckbox)
+                const entryList = $('#tasks-main-list')
+                const entryListItem = $(UIListItem).appendTo(entryList)
+                const entryListCheckbox = $(UICheckbox).appendTo(entryListItem)
+                const entryListInput = $(UIEntryInput).appendTo(entryListCheckbox)
+                const entryListLabel = $(UIEntryLabel).appendTo(entryListCheckbox)
         
+                const entryListLabelArray = [
+                    $(entryUIText).appendTo(UIEntryLabel),
+                    $(dueUIText).appendTo(UIEntryLabel),
+                    $(priorityUIText).appendTo(UIEntryLabel)
+                ]
             // Hacky validation. Ask for help to validate fields with Semantic UI
-            if(goal || dueDate || category || priority) {
-                inputsArray.forEach(element => {
-                    if(!element) {
-                        return
-                    }
+            // if(goal || dueDate || category || priority) {
+            //     inputsArray.forEach(element => {
+            //         if(!element) {
+            //             return
+            //         }
     
-                    else {
-                        console.log("\nAppended element: ", element)
-                        goalListLabel.append(element)
-                    }
-                })
+            //         else {
+            //             console.log("\nAppended element: ", element)
+            //             entryListLabel.append(element)
+            //         }
+            //     })
+            // }
+            // $('#add-input').text('')
+
+            if(goal) {
+                // $(entry).appendTo(entryUIText)
+                $(entryUIText).append(goal)
             }
-            $('#add-input').text('')
+            if(dueDate) {
+                // $(dueDate).appendTo(dueUIText)
+                $(dueUIText).append(` at ${dueDate}`)
+            }
+            if(priority) {
+                // priority.appendTo(priorityUIText)
+                $(priorityUIText).append(` P-${priority}`)
+            }
+        
+
                               
         })
     })
@@ -364,13 +431,18 @@ function renderTodoUI(user) {
                 const todoData = doc.data()
                 console.log('\n ******* doc.data():', doc.data())
                 // Get the task "value" from the textbox and store it
-                var goal = todoData.entryMessage
-                const dueDate = $('#due-date-input').val()
-                // const category = todoData.category
-                const category = ''
-                const priority = $('#priority-input').dropdown("get value")
+
+                const goal = todoData.entryMessage
+                var dueDate = todoData.due
+                const category = todoData.category
+                const priority = todoData.priority
                 const inputsArray = [goal, dueDate, category, priority]
                 var isGoalOrTask = ''
+
+                //format duedate
+                if(dueDate) {
+                    dueDate = moment(dueDate).format('h:mm a')
+                }
 
                 console.log('Goal:', goal)
                 console.log('dueDate: ', dueDate)
@@ -381,29 +453,52 @@ function renderTodoUI(user) {
 
                 const UIListItem = $(`<div class="item extra text">`)
                 const UICheckbox = $(`<div class="ui checkbox">`)
-                const UITaskInput = $(`<input type="checkbox">`)
-                const UITaskLabel = $(`<label>`)
+                const UIEntryInput = $(`<input type="checkbox">`)
+                const UIEntryLabel = $(`<label>`)
+                const entryUIText = $(`<span class="entryUIText" id="entry-UI-text">`)
+                const dueUIText = $(`<span class="dueUIText" id="due-UI-text">`)
+                const priorityUIText = $(`<span class="priorityUIText" id="priority-UI-text">`)
       
-                const goalList = $('#goals-main-list')
-                const goalListItem = $(UIListItem).appendTo(goalList)
-                const goalListCheckbox = $(UICheckbox).appendTo(goalListItem)
-                const goalListInput = $(UITaskInput).appendTo(goalListCheckbox)
-                const goalListLabel = $(UITaskLabel).appendTo(goalListCheckbox)
+                const entryList = $('#goals-main-list')
+                const entryListItem = $(UIListItem).appendTo(entryList)
+                const entryListCheckbox = $(UICheckbox).appendTo(entryListItem)
+                const entryListInput = $(UIEntryInput).appendTo(entryListCheckbox)
+                const entryListLabel = $(UIEntryLabel).appendTo(entryListCheckbox)
+
+
+                const entryListLabelArray = [
+                    $(entryUIText).appendTo(UIEntryLabel),
+                    $(dueUIText).appendTo(UIEntryLabel),
+                    $(priorityUIText).appendTo(UIEntryLabel)
+                ]
 
                 // Hacky validation. Ask for help to validate fields with Semantic UI
-                if(goal || dueDate || category || priority) {
-                    inputsArray.forEach(element => {
-                        if(!element) {
-                            return
-                        }
+                // if(goal || dueDate || category || priority) {
+                //     inputsArray.forEach(element => {
+                //         if(!element) {
+                //             return
+                //         }
 
-                        else {
-                            console.log("\nAppended element: ", element)
-                            goalListLabel.append(element)
-                        }
-                    })
+                //         else {
+                //             console.log("\nAppended element: ", element)
+                //             entryListLabel.append(element)
+                //         }
+                //     })
+                // }
+                // $('#add-input').text('')
+
+                if(goal) {
+                    // $(entry).appendTo(entryUIText)
+                    $(entryUIText).append(goal)
                 }
-                $('#add-input').text('')
+                if(dueDate) {
+                    // $(dueDate).appendTo(dueUIText)
+                    $(dueUIText).append(` at ${dueDate}`)
+                }
+                if(priority) {
+                    // priority.appendTo(priorityUIText)
+                    $(priorityUIText).append(` P-${priority}`)
+                }
             })
         })
     })
@@ -472,6 +567,9 @@ function addThreeThingsToDB(){
     })
 
 }
+
+
+// R
 
 
   // --- Section 2: Database functions ---
@@ -549,4 +647,13 @@ function displayDayToday() {
 
 }
 
+function done() {
+    event.preventDefault();
 
+    $('#goals-main-list').html('')
+    $('#tasks-main-list').html('')
+    $('#do-well').val('')
+    $('#grateful-for').val('')
+    $('#done-better').val('')
+    
+}
