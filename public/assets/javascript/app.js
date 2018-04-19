@@ -5,8 +5,12 @@ var userResultGlobalObject = {}
     // Hide Done button
     $('#done-button').hide()
 
+    $('._displayDayBox').hide()
+
+    $('.some-wrapping-div').hide()
+
     // Hide login page
-    $('._loginPage').hide()
+    // $('._loginPage').hide()
      // Check if user logged in. If logged in go to next page
     //  firebase.auth().onAuthStateChanged(newLoginHappened)
     
@@ -67,7 +71,7 @@ if (result) {
     console.log("user is signed in")
     console.log(result)
     
-    $('#login-page').hide()
+    // $('#login-page').hide()
     // Proceed to main and pass the result
     app(result)
 } else {
@@ -78,7 +82,7 @@ if (result) {
     .then(result => {
         console.log(result)
     // Hide login page after logging in
-    $('._loginPage').hide()
+    // $('._loginPage').hide()
     // Proceed to main logic
         app(result)
     })
@@ -94,8 +98,18 @@ if (result) {
     console.log(name)
     console.log(email)
     console.log()
+
+    $('._loginPage').hide()
+    
     // Hide signin-button
     $('#signin-button').hide()
+
+
+    $('._displayDayBox').show()
+    displayDayToday()
+
+    $('.some-wrapping-div').show()
+    
 
     // Change signin to user name
     $('#signin-container').html(`<div class="item">Hello, ${name}</div>`)
