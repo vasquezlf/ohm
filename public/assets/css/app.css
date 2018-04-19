@@ -7,9 +7,9 @@ body * {
     font-size: 1.20rem;
 }
 
-body {
-    /* position: relative; */
-}
+/* body {
+    position: relative;
+} */
 
 .logo-text {
     font-family: 'Monoton', cursive;
@@ -111,9 +111,9 @@ body {
         margin: 10px 0 10px;
     }
 
-    _mainGrid {
-        /* min-height: 100vh; */
-    }
+    /* _mainGrid {
+        min-height: 100vh;
+    } */
 
     ._todosBox {
         min-height: 300px;
